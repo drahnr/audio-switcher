@@ -10,7 +10,7 @@
     "40",
     "40.1"
   ],
-  "uuid": "audio-switcher@nzagorsky",
+  "uuid": "audio-switcher@github.com",
   "name": "Audio Switcher",
   "description": "Adds a switch for choosing audio input/output to the system menu in GNOME. (Makes InputSlider always visible)",
   "url": "http://github.com/nzagorsky/audio-switcher"

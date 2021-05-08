@@ -28,14 +28,14 @@ Via git
 
     curl -sL https://github.com/nzagorsky/audio-switcher/tarball/master |
       tar xzv --wildcards --strip 1 --directory ~/.local/share/gnome-shell/extensions/ \
-      "*/audio-switcher@nzagorsky"
+      "*/audio-switcher@github.com"
 
 Then restart the gnome-shell via **ALT+F2**, typing in the box **r** and enable the extension using gnome-tweak-tool
 
 To update later:
 
 `
-(cd ~/.local/share/gnome-shell/extensions/audio-switcher@nzagorsky && git pull)
+(cd ~/.local/share/gnome-shell/extensions/audio-switcher@github.com && git pull)
 `
 
 ## Credits
