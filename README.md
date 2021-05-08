@@ -13,24 +13,29 @@
   - Gnome Shell 3.28
   - Gnome Shell 3.30
   - Gnome Shell 3.32
+  - Gnome Shell 3.32
+  - Gnome Shell 3.34
+  - Gnome Shell 3.36
+  - Gnome Shell 3.38
+  - Gnome Shell 40
+  - Gnome Shell 40.1
 
 
-For Gnome Shell < 3.26, use version 1.0.
 
 ## Installation
 
 Via git
 
-`
-git clone git@github.com:AndresCidoncha/audio-switcher.git ~/.local/share/gnome-shell/extensions/audio-switcher@AndresCidoncha
-`
+    curl -sL https://github.com/nzagorsky/audio-switcher/tarball/master |
+      tar xzv --wildcards --strip 1 --directory ~/.local/share/gnome-shell/extensions/ \
+      "*/audio-switcher@nzagorsky"
 
 Then restart the gnome-shell via **ALT+F2**, typing in the box **r** and enable the extension using gnome-tweak-tool
 
 To update later:
 
 `
-(cd ~/.local/share/gnome-shell/extensions/audio-switcher@AndresCidoncha && git pull)
+(cd ~/.local/share/gnome-shell/extensions/audio-switcher@nzagorsky && git pull)
 `
 
 ## Credits
@@ -47,3 +52,4 @@ add support for the lastest versions of Gnome-shell.
 * [Martin Wilck](https://github.com/mwilck)
 * [Stefan Betz](https://github.com/encbladexp)
 * [Christoph Heiss](https://github.com/christoph-heiss)
+* [Andres Cidoncha](https://github.com/AndresCidoncha)
