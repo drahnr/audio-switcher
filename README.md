@@ -18,24 +18,24 @@
   - Gnome Shell 3.36
   - Gnome Shell 3.38
   - Gnome Shell 40
-  - Gnome Shell 40.1
-
+  - Gnome Shell 41
+  - Gnome Shell 42
 
 
 ## Installation
 
 Via git
 
-    curl -sL https://github.com/nzagorsky/audio-switcher/tarball/master |
+    curl -sL https://github.com/drahnr/audio-switcher/tarball/master |
       tar xzv --wildcards --strip 1 --directory ~/.local/share/gnome-shell/extensions/ \
-      "*/audio-switcher@github.com"
+      "*/audio-switcher@ahoi.io"
 
 Then restart the gnome-shell via **ALT+F2**, typing in the box **r** and enable the extension using gnome-tweak-tool
 
 To update later:
 
 `
-(cd ~/.local/share/gnome-shell/extensions/audio-switcher@github.com && git pull)
+(cd ~/.local/share/gnome-shell/extensions/audio-switcher@ahoi.io && git pull)
 `
 
 ## Credits

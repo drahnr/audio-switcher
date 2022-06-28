@@ -8,7 +8,9 @@
     "3.36",
     "3.38",
     "40",
-    "40.1"
+    "40.1",
+    "41",
+    "42"
   ],
   "uuid": "audio-switcher@github.com",
   "name": "Audio Switcher",
