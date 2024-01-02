@@ -1,8 +1,9 @@
-const Main = imports.ui.main;
-const PopupMenu = imports.ui.popupMenu;
-const GObject = imports.gi.GObject;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
+import {PopupMenu} from  'resource:///org/gnome/shell/ui/popupMenu.js';
+import {GObject} from 'gi://GObject';
 
-const AudioOutputSubMenu = GObject.registerClass({
+let AudioOutputSubMenu = GObject.registerClass({
     GTypeName: 'ASAudioOutputSubMenu',
 }, class AudioOutputSubMenu extends PopupMenu.PopupSubMenuMenuItem {
     _init() {
@@ -66,7 +67,7 @@ const AudioOutputSubMenu = GObject.registerClass({
 	}
 });
 
-const AudioInputSubMenu = GObject.registerClass({
+let AudioInputSubMenu = GObject.registerClass({
     GTypeName: 'ASAudioInputSubMenu',
 }, class AudioInputSubMenu extends PopupMenu.PopupSubMenuMenuItem {
     _init() {
@@ -132,51 +133,53 @@ const AudioInputSubMenu = GObject.registerClass({
 	}
 });
 
-var audioOutputSubMenu = null;
-var audioInputSubMenu = null;
-var savedUpdateVisibility = null;
 
-function init() {
-}
+export default class AudioSwitcherExtension extends Extension {
+	constructor(metadata) {
+		super(metadata)
 
-function enable() {
-	if ((audioInputSubMenu != null) || (audioOutputSubMenu != null))
-		return;
-	audioInputSubMenu = new AudioInputSubMenu();
-	audioOutputSubMenu = new AudioOutputSubMenu();
-
-	//Try to add the switchers right below the sliders...
-	let volMen = Main.panel.statusArea.aggregateMenu._volume._volumeMenu;
-	let items = volMen._getMenuItems();
-	let i = 0;
-	let addedInput, addedOutput = false;
-	while (i < items.length){
-		if (items[i] === volMen._output.item){
-			volMen.addMenuItem(audioOutputSubMenu, i+1);
-			addedOutput = true;
-		} else if (items[i] === volMen._input.item){
-			volMen.addMenuItem(audioInputSubMenu, i+2);
-			addedInput = true;
-		}
-		if (addedOutput && addedInput){
-			break;
-		}
-		i++;
+		this.audioOutputSubMenu = null;
+		this.audioInputSubMenu = null;
+		this.savedUpdateVisibility = null;
 	}
+	enable() {
+		if ((audioInputSubMenu != null) || (audioOutputSubMenu != null))
+			return;
+		this.audioInputSubMenu = new AudioInputSubMenu();
+		this.audioOutputSubMenu = new AudioOutputSubMenu();
 
-	//Make input-slider allways visible.
-	savedUpdateVisibility = Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility;
-	Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility = function () {};
-	Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input.item.actor.visible = true;
-}
+		//Try to add the switchers right below the sliders...
+		let volMen = Main.panel.statusArea.aggregateMenu._volume._volumeMenu;
+		let items = volMen._getMenuItems();
+		let i = 0;
+		let addedInput, addedOutput = false;
+		while (i < items.length){
+			if (items[i] === volMen._output.item){
+				volMen.addMenuItem(audioOutputSubMenu, i+1);
+				addedOutput = true;
+			} else if (items[i] === volMen._input.item){
+				volMen.addMenuItem(audioInputSubMenu, i+2);
+				addedInput = true;
+			}
+			if (addedOutput && addedInput){
+				break;
+			}
+			i++;
+		}
 
-function disable() {
-	audioInputSubMenu.destroy();
-	audioInputSubMenu = null;
-	audioOutputSubMenu.destroy();
-	audioOutputSubMenu = null;
+		//Make input-slider allways visible.
+		this.savedUpdateVisibility = Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility;
+		Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility = function () {};
+		Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input.item.actor.visible = true;
+	}
+	disable() {
+		this.audioInputSubMenu.destroy();
+		this.audioInputSubMenu = null;
+		this.audioOutputSubMenu.destroy();
+		this.audioOutputSubMenu = null;
 
-	Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility = savedUpdateVisibility;
-	savedUpdateVisibility = null;
-	Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility();
+		Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility = savedUpdateVisibility;
+		this.savedUpdateVisibility = null;
+		Main.panel.statusArea.aggregateMenu._volume._volumeMenu._input._updateVisibility();
+	}
 }
